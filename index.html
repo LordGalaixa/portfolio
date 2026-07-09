@@ -3,331 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Developer & Creative Specialist</title>
+    <title>Dynamic Business Rate Sheet</title>
     <style>
-        /* Modern Design System Tokens */
         :root {
-            --bg-main: #0f172a; /* Deep slate background */
-            --bg-card: #1e293b; /* Lighter card background */
-            --border-color: #334155; /* Subtle borders */
-            --text-main: #f8fafc; /* Crisp white text */
-            --text-muted: #94a3b8; /* Soft gray for descriptions */
-            --accent-cyan: #06b6d4; /* Electric cyan for links/highlights */
-            --accent-blue: #3b82f6; /* Royal blue for main actions */
+            --bg-main: #0b0f19;
+            --bg-surface: #1e293b;
+            --border-color: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-green: #22c55e;
+            --accent-blue: #3b82f6;
         }
 
-        /* Base Resets */
-        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
-        body { 
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
-            background-color: var(--bg-main); 
-            color: var(--text-main); 
-            line-height: 1.6; 
-        }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-main); padding: 40px 20px; line-height: 1.5; }
+        .container { max-width: 900px; margin: 0 auto; }
 
-        /* Navigation Bar */
-        nav {
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            background-color: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(8px);
-            z-index: 100;
-        }
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 70px;
-        }
-        .logo { font-size: 1.3rem; font-weight: bold; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; margin-left: 25px; transition: color 0.3s; font-size: 0.95rem; }
-        .nav-links a:hover { color: var(--text-main); }
+        /* Header Layout */
+        header { text-align: center; margin-bottom: 40px; }
+        header h1 { font-size: 2.5rem; color: var(--text-main); font-weight: 800; letter-spacing: -0.5px; }
+        header p { color: var(--text-muted); margin-top: 5px; font-size: 1.1rem; }
 
-        /* Hero / Introduction Section */
-        #hero { padding: 100px 0 60px; text-align: center; }
-        .profile-container { margin-bottom: 25px; position: relative; display: inline-block; }
-        .profile-pic { 
-            width: 140px; 
-            height: 140px; 
-            border-radius: 50%; 
-            border: 3px solid var(--accent-cyan); 
-            object-fit: cover;
-            background: #1e293b;
+        /* Controls Section (Search Bar) */
+        .search-container {
+            margin-bottom: 30px;
+            position: relative;
         }
-        #hero h1 { font-size: 3.2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 15px; background: linear-gradient(to right, #fff, var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        #hero h1 span { background: linear-gradient(to right, var(--accent-cyan), var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        #hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 30px; }
+        .search-bar {
+            width: 100%;
+            padding: 16px 20px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1.1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .search-bar:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Grid Table Architecture */
+        .rate-table {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
         
-        /* Buttons */
-        .btn { display: inline-block; background: var(--accent-blue); color: #fff; padding: 12px 28px; border-radius: 6px; text-decoration: none; font-weight: 600; transition: transform 0.2s, background 0.2s; border: none; cursor: pointer; }
-        .btn:hover { background: #2563eb; transform: translateY(-2px); }
-        .btn-secondary { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); margin-left: 15px; }
-        .btn-secondary:hover { background: var(--bg-card); }
+        /* Table Headers */
+        .table-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            background: #111827;
+            padding: 15px 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+        }
 
-        /* Section Global Layout */
-        section { padding: 80px 0; border-top: 1px solid var(--border-color); }
-        .section-title { font-size: 2rem; margin-bottom: 40px; position: relative; display: inline-block; }
-        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--accent-cyan); margin-top: 8px; }
+        /* Table Rows */
+        .item-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border-color);
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .item-row:last-child { border-bottom: none; }
+        .item-row:hover { background: rgba(59, 130, 246, 0.05); }
 
-        /* Pillars Core Grid */
-        .pillar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-        .pillar-card { background: var(--bg-card); border: 1px solid var(--border-color); padding: 35px; border-radius: 12px; transition: transform 0.3s, border-color 0.3s; }
-        .pillar-card:hover { transform: translateY(-5px); border-color: var(--accent-cyan); }
-        .pillar-icon { font-size: 2rem; margin-bottom: 15px; display: inline-block; color: var(--accent-cyan); }
-        .pillar-card h3 { font-size: 1.4rem; margin-bottom: 12px; }
-        .pillar-card p { color: var(--text-muted); font-size: 0.95rem; }
+        .item-info .item-name { font-weight: 600; font-size: 1.1rem; color: #fff; }
+        .item-info .item-desc { font-size: 0.85rem; color: var(--text-muted); margin-top: 2px; }
+        
+        .item-spec { color: var(--text-main); font-size: 0.95rem; }
+        .item-price { font-weight: 700; color: var(--accent-green); font-size: 1.1rem; text-align: right; }
 
-        /* Projects Placeholder Grid */
-        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .project-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
-        .project-img-placeholder { height: 200px; background: #0f172a; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border-color); color: var(--text-muted); font-style: italic; font-size: 0.9rem; position: relative; }
-        .project-badge { position: absolute; top: 15px; right: 15px; background: rgba(6, 182, 212, 0.2); color: var(--accent-cyan); border: 1px solid var(--accent-cyan); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
-        .project-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .project-content h3 { font-size: 1.3rem; margin-bottom: 10px; }
-        .project-content p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
-        .project-links { display: flex; gap: 15px; }
-        .project-links a { font-size: 0.9rem; color: var(--accent-cyan); text-decoration: none; font-weight: 600; }
-        .project-links a:hover { text-decoration: underline; }
+        /* No Results Found State */
+        .no-results {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            display: none;
+        }
 
-        /* Footer Section */
-        footer { padding: 40px 0; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-muted); font-size: 0.9rem; }
-        footer p { margin-bottom: 10px; }
-        footer a { color: var(--text-main); text-decoration: none; }
+        /* Back to Portfolio Link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .back-link:hover { text-decoration: underline; }
 
-        /* Responsive Tweaks */
-        @media (max-width: 768px) {
-            #hero h1 { font-size: 2.3rem; }
-            .nav-links { display: none; } /* Kept simple for now */
-            .btn-secondary { margin-left: 0; margin-top: 15px; display: block; text-align: center; }
+        @media (max-width: 600px) {
+            .table-header { display: none; }
+            .item-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 20px;
+            }
+            .item-price { text-align: left; margin-top: 5px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- STICKY HEADER NAVIGATION -->
-    <nav>
-        <div class="container nav-container">
-            <div class="logo">Digital Systems Portfolio</div>
-            <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#expertise">Expertise</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
-            </div>
-        </div>
-    </nav>
-
     <div class="container">
-        
-        <!-- HERO INTRODUCTION SECTION -->
-        <header id="hero">
-            <div class="profile-container">
-                <!-- Placeholder Image: Replace 'avatar.png' with your real picture file later -->
-                <img src="https://via.placeholder.com/140" alt="Profile Picture" class="profile-pic" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'140\' height=\'140\' viewBox=\'0 0 140 140\'><rect width=\'140\' height=\'140\' fill=\'%231e293b\'/><text x=\'50%\' y=\'55%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2394a3b8\' font-size=\'14\'>[ Photo Placeholder ]</text></svg>'">
-            </div>
-            <h1>Hi, I'm a <span>Digital Specialist</span></h1>
-            <p>I engineer responsive web applications, design clean marketing assets, and build automated workflows to scale digital platforms efficiently.</p>
-            <div>
-                <a href="#projects" class="btn">View My Projects</a>
-                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-            </div>
+        <a href="../" class="back-link">← Return to Main Portfolio</a>
+
+        <header>
+            <h1>Commercial Service Rate Sheet</h1>
+            <p>Real-time dynamic inventory pricing matrix and design packages</p>
         </header>
 
-        <!-- THE THREE CORE PILLARS OF DIVERSITY -->
-        <section id="expertise">
-            <h2 class="section-title">Core Capability Pillars</h2>
-            <div class="pillar-grid">
-                
-                <!-- Pillar 1 -->
-                <div class="pillar-card">
-                    <span class="pillar-icon">💻</span>
-                    <h3>Web & App Development</h3>
-                    <p>Building clean, logic-driven web systems using modern layouts and robust backend components. Focused on script logic, processing user data, and clean application states.</p>
-                </div>
+        <div class="search-container">
+            <input type="text" id="rate-search" class="search-bar" placeholder="Type a service or specification to filter live (e.g., 'Flyer', 'Logo', 'A4')...">
+        </div>
 
-                <!-- Pillar 2 -->
-                <div class="pillar-card">
-                    <span class="pillar-icon">🎨</span>
-                    <h3>Graphic & Media Design</h3>
-                    <p>Creating high-impact brand layouts, production-ready marketing flyers, corporate identity sets, and custom vector media engineered for professional commercial use.</p>
-                </div>
-
-                <!-- Pillar 3 -->
-                <div class="pillar-card">
-                    <span class="pillar-icon">⚙️</span>
-                    <h3>Workflow & Automation</h3>
-                    <p>Integrating cloud management platforms like monday.com via custom APIs, writing automation scripts, and executing system-level content deployment logic.</p>
-                </div>
-
+        <div class="rate-table">
+            <div class="table-header">
+                <div>Service & Description</div>
+                <div>Standard Formatting</div>
+                <div style="text-align: right;">Rate (ZAR)</div>
             </div>
-        </section>
 
-        <!-- FEATURED PROJECTS SHOWCASE (WITH PLACEHOLDERS) -->
-        <section id="projects">
-            <h2 class="section-title">Featured Case Studies</h2>
-            <div class="project-grid">
-
-                <!-- Project 1 Placeholder (The Monday.com / Web App Winner) -->
-               <div class="project-card">
-    <div class="project-img-placeholder">
-        <span class="project-badge">Web Dev + Automation</span>
-        [ Live Form Pipeline Demo ]
-    </div>
-    <div class="project-content">
-        <div>
-            <h3>Active Workflow API Dashboard</h3>
-            <p>A web framework connected directly to a cloud project ecosystem. Demonstrates live user-data submission processing, webhook triggers, and automated board updates on monday.com.</p>
-            
-            <form id="monday-intake-form" style="background: #0f172a; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #334155;">
-                <div style="margin-bottom: 10px;">
-                    <label style="display:block; font-size: 0.8rem; color: #94a3b8; margin-bottom: 4px;">Client Name / Company</label>
-                    <input type="text" id="client-name" required style="width: 100%; padding: 6px; background: #1e293b; border: 1px solid #334155; color: #fff; border-radius: 4px; font-size: 0.9rem;">
-                </div>
-                <div style="margin-bottom: 10px;">
-                    <label style="display:block; font-size: 0.8rem; color: #94a3b8; margin-bottom: 4px;">Project Requirements</label>
-                    <textarea id="project-details" required rows="2" style="width: 100%; padding: 6px; background: #1e293b; border: 1px solid #334155; color: #fff; border-radius: 4px; font-size: 0.9rem; resize: vertical;"></textarea>
-                </div>
-                <button type="submit" style="background: #06b6d4; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.85rem; width: 100%;">Submit to Monday.com Board</button>
-                <div id="form-status" style="margin-top: 8px; font-size: 0.8rem; text-align: center; display: none;"></div>
-            </form>
-        </div>
-        <div class="project-links" style="margin-top: 15px;">
-            <a href="#monday-intake-form">Live Demo Above</a>
-            <a href="https://github.com/" target="_blank">[ View Automation Logic on GitHub ]</a>
-        </div>
-    </div>
-</div>
-                    <div class="project-content">
-                        <div>
-                            <h3>Active Workflow API Dashboard</h3>
-                            <p>A web framework connected directly to a cloud project ecosystem. Demonstrates live user-data submission processing, webhook triggers, and automated board updates on monday.com.</p>
-                        </div>
-                        <div class="project-links">
-                            <a href="#">[ Live Application Demo Link ]</a>
-                            <a href="#">[ Source Code Link ]</a>
-                        </div>
+            <div id="catalog-rows">
+                <div class="item-row">
+                    <div class="item-info">
+                        <div class="item-name">Corporate Flyer Design</div>
+                        <div class="item-desc">Custom single-sided promotional layout, high-impact vector graphics.</div>
                     </div>
+                    <div class="item-spec">A4 / Print-Ready</div>
+                    <div class="item-price">R350.00</div>
                 </div>
 
-                <!-- Project 2 Placeholder (The System / Utility Tool) -->
-              <div class="project-card">
-    <div class="project-img-placeholder" style="background: #111827;">
-        <span class="project-badge" style="background: rgba(234, 179, 8, 0.2); color: #eab308; border: 1px solid #eab308;">System Utilities</span>
-        <div style="font-family: 'Courier New', Courier, monospace; font-size: 0.75rem; color: #22c55e; padding: 20px; width: 100%; text-align: left;">
-            <div>&gt; python automated_parser.py</div>
-            <div style="color: #94a3b8;">[INFO] Initializing matrix scan...</div>
-            <div style="color: #38bdf8;">[SUCCESS] 28 source items mapped.</div>
-            <div>&gt; <span style="animation: blink 1s infinite;">_</span></div>
-        </div>
-    </div>
-    <div class="project-content">
-        <div>
-            <h3>Automated Data Parsing Suite</h3>
-            <p>A practical administrative system application executing backend sorting algorithms. Handles programmatic batch processing, local file matrix routing, or dynamic product pricing matrix generation.</p>
-        </div>
-        <div class="project-links" style="margin-top: 15px;">
-            <button id="run-script-btn" style="background: #eab308; color: #0f172a; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.85rem; width: 100%;">Execute Diagnostic Script Simulation</button>
-        </div>
-    </div>
-</div>
+                <div class="item-row">
+                    <div class="item-info">
+                        <div class="item-name">Bi-Fold Business Brochure</div>
+                        <div class="item-desc">Double-sided structural layout formatting with custom typography matching corporate assets.</div>
+                    </div>
+                    <div class="item-spec">A4 Folded / Digital</div>
+                    <div class="item-price">R650.00</div>
+                </div>
 
-                <!-- Project 3 Placeholder (The Creative Layout Portfolio) -->
-                <!-- Project 3: The Creative Layout Portfolio -->
-<div class="project-card" style="grid-column: span 1;">
-    <div class="project-img-placeholder" style="background: #1e293b;">
-        <span class="project-badge" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid #c084fc;">Graphic Design Portfolio</span>
-        <!-- MINI GALLER GRID EMBEDDED -->
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; width: 100%; height: 100%; padding: 15px;">
-            <div style="background: #334155; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #64748b;">Flyer 1</div>
-            <div style="background: #334155; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #64748b;">Logo</div>
-            <div style="background: #334155; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #64748b;">Flyer 2</div>
-        </div>
-    </div>
-    <div class="project-content">
-        <div>
-            <h3>Commercial Branding & Print Gallery</h3>
-            <p>A curated collection of professional marketing assets, print-ready client flyers, and digital designs engineered to match corporate identity standards and promotional layouts.</p>
-        </div>
-        <div class="project-links" style="margin-top: 15px;">
-            <button id="view-gallery-btn" style="background: transparent; border: 1px solid #c084fc; color: #c084fc; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.85rem; width: 100%;">Click to View Asset Gallery</button>
-        </div>
-    </div>
-</div>
+                <div class="item-row">
+                    <div class="item-info">
+                        <div class="item-name">Vector Brand Logo Suite</div>
+                        <div class="item-desc">Initial brand conceptualization, transparent background assets, high-definition scales.</div>
+                    </div>
+                    <div class="item-spec">Source Vector File</div>
+                    <div class="item-price">R800.00</div>
+                </div>
 
+                <div class="item-row">
+                    <div class="item-info">
+                        <div class="item-name">Landing Page Frontend Shell</div>
+                        <div class="item-desc">Clean native semantic HTML5, CSS layout tokens, and interactive javascript logic.</div>
+                    </div>
+                    <div class="item-spec">Single Page Application</div>
+                    <div class="item-price">R1,500.00</div>
+                </div>
+
+                <div class="item-row">
+                    <div class="item-info">
+                        <div class="item-name">Asynchronous Data Parser Script</div>
+                        <div class="item-desc">Python-based automation loop executing data extraction and local matrix routing logic.</div>
+                    </div>
+                    <div class="item-spec">Local Executable Script</div>
+                    <div class="item-price">R1,200.00</div>
+                </div>
             </div>
-        </section>
 
-        <!-- CONTACT DETAILS -->
-        <section id="contact">
-            <h2 class="section-title">Connect Professionally</h2>
-            <div style="background: var(--bg-card); padding: 40px; border-radius: 12px; border: 1px solid var(--border-color); text-align: center;">
-                <p style="font-size: 1.1rem; margin-bottom: 20px;">Ready to implement software integrations, custom automation, or clean design frameworks for your company operations?</p>
-                <p style="font-size: 1.3rem; font-weight: bold; color: var(--accent-cyan);">YourBusinessEmail@gmail.com</p>
+            <div id="no-results-msg" class="no-results">
+                No services match your active search criteria.
             </div>
-        </section>
-
+        </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Professional Digital Developer & Designer Portfolio</p>
-            <p style="font-size: 0.8rem; color: #64748b;">Built completely with semantic HTML5 and clean native CSS architectures.</p>
-        </div>
-    </footer>
+    <script>
+        document.getElementById('rate-search').addEventListener('input', function(e) {
+            const searchQuery = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#catalog-rows .item-row');
+            const noResults = document.getElementById('no-results-msg');
+            let itemsFound = 0;
 
-<script>
-    document.getElementById('monday-intake-form').addEventListener('submit', function(e) {
-        e.preventDefault(); // Prevents the page from reloading
-        
-        const statusDiv = document.getElementById('form-status');
-        statusDiv.style.display = 'block';
-        statusDiv.style.color = '#06b6d4';
-        statusDiv.innerText = 'Processing webhook connection...';
+            rows.forEach(row => {
+                // Read text contents from the rows
+                const textContent = row.textContent.toLowerCase();
+                
+                // Match search input against whole row contents
+                if (textContent.includes(searchQuery)) {
+                    row.style.display = 'grid';
+                    itemsFound++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
 
-        // Capturing the form data
-        const clientName = document.getElementById('client-name').value;
-        const projectDetails = document.getElementById('project-details').value;
-
-        // Formulating the payload for the API/Webhook pipeline
-        const payload = {
-            item_name: clientName,
-            column_values: {
-                details: projectDetails,
-                status: "New Intake",
-                date: new Date().toISOString().split('T')[0]
+            // Handle display logic for empty states
+            if (itemsFound === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
             }
-        };
-
-        console.log("Data packet structured for Monday.com API:", payload);
-
-        // Simulation for local testing before connecting live API keys
-        setTimeout(() => {
-            statusDiv.style.color = '#22c55e'; // Success Green
-            statusDiv.innerText = '✔ Success! Item created on Monday.com Board.';
-            // Reset form fields
-            document.getElementById('monday-intake-form').reset();
-        }, 1500);
-    });  // Graphic Design Gallery Interactive Popup Demo
-        document.getElementById('view-gallery-btn').addEventListener('click', function() {
-            alert("Gallery Showcase Interface Initialized!\n\nThis interaction launches a full-screen, high-definition lightbox modal displaying your high-resolution PNG/JPG client flyers and brand vectors.");
-        });// System Utility Terminal Logic Simulation
-        document.getElementById('run-script-btn').addEventListener('click', function() {
-            const btn = this;
-            btn.disabled = true;
-            btn.innerText = "Running Logic Array...";
-            btn.style.background = "#475569";
-            btn.style.color = "#94a3b8";
-            
-            alert("System Script Initialized:\n\nRunning local background automation script...\n- Parsing data files\n- Organizing dynamic matrix columns\n- Optimization complete!");
-            
-            btn.disabled = false;
-            btn.innerText = "Execute Diagnostic Script Simulation";
-            btn.style.background = "#eab308";
-            btn.style.color = "#0f172a";
         });
-</script>
+    </script>
 </body>
 </html>
