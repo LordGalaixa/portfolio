@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Business Rate Sheet</title>
+    <style>
+        :root {
+            --bg-main: #0b0f19;
+            --bg-surface: #1e293b;
+            --border-color: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-green: #22c55e;
+            --accent-blue: #3b82f6;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-main); padding: 40px 20px; line-height: 1.5; }
+        .container { max-width: 900px; margin: 0 auto; }
+
+        /* Header Layout */
+        header { text-align: center; margin-bottom: 40px; }
+        header h1 { font-size: 2.5rem; color: var(--text-main); font-weight: 800; letter-spacing: -0.5px; }
+        header p { color: var(--text-muted); margin-top: 5px; font-size: 1.1rem; }
+
+        /* Controls Section (Search Bar) */
+        .search-container {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .search-bar {
+            width: 100%;
+            padding: 16px 20px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1.1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .search-bar:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Grid Table Architecture */
+        .rate-table {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Table Headers */
+        .table-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            background: #111827;
+            padding: 15px 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Table Rows */
+        .item-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border-color);
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .item-row:last-child { border-bottom: none; }
+        .item-row:hover { background: rgba(59, 130, 246, 0.05); }
+
+        .item-info .item-name { font-weight: 600; font-size: 1.1rem; color: #fff; }
+        .item-info .item-desc { font-size: 0.85rem; color: var(--text-muted); margin-top: 2px; }
+        
+        .item-spec { color: var(--text-main); font-size: 0.95rem; }
+        .item-price { font-weight: 700; color: var(--accent-green); font-size: 1.1rem; text-align: right; }
+
+        /* No Results Found State */
+        .no-results {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            display: none;
+        }
+
+        /* Back to Portfolio Link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .back-link:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) {
+            .table-header { display: none; }
+            .item-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 20px;
+            }
+            .item-price { text-align: left; margin-top: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="../" class="back-link">← Return to Main Portfolio</a>
+
+        <header>
+            <h1>Commercial Service Rate Sheet</h1>
+            <p>Real-time dynamic inventory pricing matrix and design packages</p>
+        </header>
+
+        <div class="search-container">
+            <input type="text" id="rate-search" class="search-bar" placeholder="Type a service or specification to filter live (e.g., 'Flyer', 'Logo', 'A4')...">
+        </div>
+
+        <div class="rate-table">
+            <div class="table-header">
+                <div>Service & Description</div>
+                <div>Standard Formatting</div>
+                <div style="text-align: right;">Rate (ZAR)</div>
+            </div>
+
+            <div id="catalog-rows">
+                <div class="item-row">
+                    <div class="item-info">
+                        <div class="item-name">Corporate Flyer Design</div>
+                        <div class="item-desc">Custom single-sided promotional layout, high-impact vector graphics.</div>
+                    </div>
+                    <div class="item-spec">A4 / Print-Ready</div>
+                    <div class="item-price">R350.00</div>
+                </div>
+
+                <div class="item-row">
+                    <div class="item-info">
+                        <div class="item-name">Bi-Fold Business Brochure</div>
+                        <div class="item-desc">Double-sided structural layout formatting with custom typography matching corporate assets.</div>
+                    </div>
+                    <div class="item-spec">A4 Folded / Digital</div>
+                    <div class="item-price">R650.00</div>
+                </div>
+
+                <div class="item-row">
+                    <div class="item-info">
+                        <div class="item-name">Vector Brand Logo Suite</div>
+                        <div class="item-desc">Initial brand conceptualization, transparent background assets, high-definition scales.</div>
+                    </div>
+                    <div class="item-spec">Source Vector File</div>
+                    <div class="item-price">R800.00</div>
+                </div>
+
+                <div class="item-row">
+                    <div class="item-info">
+                        <div class="item-name">Landing Page Frontend Shell</div>
+                        <div class="item-desc">Clean native semantic HTML5, CSS layout tokens, and interactive javascript logic.</div>
+                    </div>
+                    <div class="item-spec">Single Page Application</div>
+                    <div class="item-price">R1,500.00</div>
+                </div>
+
+                <div class="item-row">
+                    <div class="item-info">
+                        <div class="item-name">Asynchronous Data Parser Script</div>
+                        <div class="item-desc">Python-based automation loop executing data extraction and local matrix routing logic.</div>
+                    </div>
+                    <div class="item-spec">Local Executable Script</div>
+                    <div class="item-price">R1,200.00</div>
+                </div>
+            </div>
+
+            <div id="no-results-msg" class="no-results">
+                No services match your active search criteria.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('rate-search').addEventListener('input', function(e) {
+            const searchQuery = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#catalog-rows .item-row');
+            const noResults = document.getElementById('no-results-msg');
+            let itemsFound = 0;
+
+            rows.forEach(row => {
+                // Read text contents from the rows
+                const textContent = row.textContent.toLowerCase();
+                
+                // Match search input against whole row contents
+                if (textContent.includes(searchQuery)) {
+                    row.style.display = 'grid';
+                    itemsFound++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // Handle display logic for empty states
+            if (itemsFound === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
